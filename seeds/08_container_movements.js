@@ -55,6 +55,26 @@ export async function seed(knex) {
       customs_status: 'In Bond',
       eta: '2025-05-23 18:00:00',
       storage_last_free_day: null
+    },
+    {
+      container_id: 6,
+      status: 'In Transit',
+      location: 'Calgary',
+      event_description: 'On Rail',
+      event_time: '2025-05-19 16:20:00',
+      customs_status: 'In Bond',
+      eta: '2025-06-02 18:00:00',
+      storage_last_free_day: null
+    },
+    {
+      container_id: 7,
+      status: 'In Transit',
+      location: 'Toronto',
+      event_description: 'On Rail',
+      event_time: '2025-05-19 16:20:00',
+      customs_status: 'In Bond',
+      eta: '2025-06-03 18:00:00',
+      storage_last_free_day: null
     }
   ]);
 }

@@ -45,6 +45,22 @@ export async function seed(knex) {
       forwarder_id: 5,
       client_id: 5,
       forwarder_ref: 'REF005'
+    },
+    {
+      container_number: 'ZCSU4028222',
+      agent_id: 1,
+      operator_id: 1,
+      forwarder_id: 1,
+      client_id: 1,
+      forwarder_ref: 'REF006'
+    },
+    {
+      container_number: 'ZCSU4028233',
+      agent_id: 1,
+      operator_id: 1,
+      forwarder_id: 1,
+      client_id: 1,
+      forwarder_ref: 'REF007'
     }
   ]);
 }
