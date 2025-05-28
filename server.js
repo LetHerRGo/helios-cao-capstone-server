@@ -18,9 +18,7 @@ const logRequest = (req, res, next) => {
 const PORT = process.env.PORT || 9090;
 
 app.use(express.json());
-
 app.use(logRequest);
-
 app.use(cors());
 
 app.get("/", (req, res) => {
