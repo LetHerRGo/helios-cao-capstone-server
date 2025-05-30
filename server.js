@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import authRoutes from "./routes/authRoutes.js"
 import trackRoutes from "./routes/trackRoutes.js"
+import addshipmentRoutes from "./routes/addshipmentRoutes.js"
 import initKnex from "knex";
 import configuration from "./knexfile.js";
 
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 
 app.use("/login", authRoutes);
 app.use("/track", trackRoutes);
+app.use("/addshipment", addshipmentRoutes);
 
 app.listen(PORT, function () {
   console.log(`Listening on port ${PORT}...`);

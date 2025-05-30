@@ -12,8 +12,6 @@ router.post('/', async (req, res) => {
     
     try {
         const token = await authenticateUser(username, password);
-       
-        console.log('username and pw matched!')
         res.json({message: 'Login successful', token});
     } catch (error) {
         console.log(error);
