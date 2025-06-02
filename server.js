@@ -6,6 +6,7 @@ import trackRoutes from "./routes/trackRoutes.js"
 import addshipmentRoutes from "./routes/addshipmentRoutes.js"
 import agentsRoutes from "./routes/agentsRoutes.js"
 import clientsRoutes from "./routes/clientsRoutes.js"
+import traceRoutes from "./routes/traceRoutes.js"
 import initKnex from "knex";
 import configuration from "./knexfile.js";
 
@@ -33,6 +34,7 @@ app.use("/track", trackRoutes);
 app.use("/addshipment", addshipmentRoutes);
 app.use("/agents", agentsRoutes);
 app.use("/clients", clientsRoutes);
+app.use("/trace", traceRoutes);
 
 app.listen(PORT, function () {
   console.log(`Listening on port ${PORT}...`);

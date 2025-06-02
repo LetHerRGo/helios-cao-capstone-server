@@ -9,8 +9,8 @@ const router = express.Router();
 
 router.post('/', verifyToken, verifyRole('forwarder'), async (req, res) => {
 if (req.user) {
-    const agent_id = await knex("agent").select("id").where("name", req.body.agentName).first();
     
+    const agent_id = await knex("agent").select("id").where("name", req.body.agentName).first();
     const operator_id = await knex("forwarder_operator").select("id").where("username", req.user.username).first();
     const forwarder_id = await knex("forwarder_operator").select("forwarder_id").where("username", req.user.username).first();
     const client_id = await knex("client").select("id").where("name", req.body.clientName).first();

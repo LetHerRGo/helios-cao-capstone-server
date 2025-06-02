@@ -25,7 +25,7 @@ router.post('/', verifyToken, verifyRole('forwarder'), async(req, res) => {
         const equipmentList = data.ThirdPartyIntermodalShipment.Equipment.map((equipment) => {
             return {
                 id: equipment.EquipmentId || "N/A",
-                status: equipment.WaybillStatus || "N/A",
+                status:  "N/A", // put N/A for now, need to figure out what to show
                 location: equipment.Event?.Location?.Station || "Unknown",
                 eventTime: equipment.Event?.Time || "N/A",
                 eventDescription: equipment.Event?.Description || "N/A",
@@ -34,7 +34,6 @@ router.post('/', verifyToken, verifyRole('forwarder'), async(req, res) => {
                 storageLastFreeDay: equipment.StorageCharge?.LastFreeDay || "N/A",
             }
         });
-
 
         res.json({
             equipmentList: equipmentList
