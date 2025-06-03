@@ -9,11 +9,17 @@ const router = express.Router();
 
 router.get('/', verifyToken, verifyRole('forwarder'), async (req, res) => {
   try {
+    const username = req.user.username;
+    const operator = await knex("forwarder_operator").where({username}).first();
+    if (!operator) {
+      return res.status(404).json({ message: "Operator not found" });
+    }
     //join data from multiple tables
     const data = await knex("container_movements")
       .join("containers", "container_movements.container_id", "containers.id")
       .leftJoin("agent", "containers.agent_id", "agent.id")
       .leftJoin("client", "containers.client_id", "client.id")
+      .where("containers.operator_id", operator.id)
       .select(
         "container_movements.*",
         "containers.container_number",
