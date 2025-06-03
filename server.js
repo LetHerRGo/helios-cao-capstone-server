@@ -3,6 +3,10 @@ import cors from "cors";
 import "dotenv/config";
 import authRoutes from "./routes/authRoutes.js"
 import trackRoutes from "./routes/trackRoutes.js"
+import addshipmentRoutes from "./routes/addshipmentRoutes.js"
+import agentsRoutes from "./routes/agentsRoutes.js"
+import clientsRoutes from "./routes/clientsRoutes.js"
+import traceRoutes from "./routes/traceRoutes.js"
 import initKnex from "knex";
 import configuration from "./knexfile.js";
 
@@ -18,9 +22,7 @@ const logRequest = (req, res, next) => {
 const PORT = process.env.PORT || 9090;
 
 app.use(express.json());
-
 app.use(logRequest);
-
 app.use(cors());
 
 app.get("/", (req, res) => {
@@ -29,6 +31,10 @@ app.get("/", (req, res) => {
 
 app.use("/login", authRoutes);
 app.use("/track", trackRoutes);
+app.use("/addshipment", addshipmentRoutes);
+app.use("/agents", agentsRoutes);
+app.use("/clients", clientsRoutes);
+app.use("/trace", traceRoutes);
 
 app.listen(PORT, function () {
   console.log(`Listening on port ${PORT}...`);
