@@ -15,9 +15,8 @@ router.post('/', verifyToken, verifyRole('forwarder'), async(req, res) => {
     }
 
 // // Regex to validate container number format (4 letters + 7 digits)
-    const containerNumberRegex = /\b[A-Z]{4}\d{7}\b/g;
-    const extractedContainers = ctnrNums.match(containerNumberRegex);
-    console.log(extractedContainers);
+    const extractedContainers = ctnrNums.match(/\b[A-Z]{4}\d{7}\b/g);
+    // console.log(extractedContainers);
 
     try {
         

@@ -64,7 +64,7 @@ async function tracking(ctnrNums) {
     }
     try {
     const response = await axios.get(trackingUrl, { headers, params: trackingParam } );
-    console.log(JSON.stringify(response.data, null, 2));
+    // console.log(JSON.stringify(response.data, null, 2));
     return response.data;
     
     } catch(error) {
