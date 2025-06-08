@@ -5,7 +5,7 @@ import cnTracking from "../services/cnTracking.js"
 
 const router = express.Router();
 
-router.post('/', verifyToken, verifyRole('forwarder'), async(req, res) => {
+router.post('/', verifyToken, verifyRole('operator'), async(req, res) => {
     const {ctnrNums} = req.body;
     
 
@@ -28,6 +28,7 @@ router.post('/', verifyToken, verifyRole('forwarder'), async(req, res) => {
                 location: equipment.Event?.Location?.Station || "Unknown",
                 eventTime: equipment.Event?.Time || "N/A",
                 eventDescription: equipment.Event?.Description || "N/A",
+                destination: equipment.Destination?.Station || "N/A",
                 ETA: equipment.ETA?.Time || "N/A",
                 customsStatus: equipment.CustomsHold?.Description || "N/A",
                 storageLastFreeDay: equipment.StorageCharge?.LastFreeDay || "N/A",

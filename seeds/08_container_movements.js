@@ -13,6 +13,7 @@ export async function seed(knex) {
       event_description: 'Departed Port',
       event_time: '2025-05-15 10:00:00',
       customs_status: 'In Bond',
+      destination: 'Montreal',
       eta: '2025-05-20 08:00:00',
       storage_last_free_day: '2025-05-24'
     },
@@ -23,6 +24,7 @@ export async function seed(knex) {
       event_description: 'Discharged',
       event_time: '2025-05-16 12:30:00',
       customs_status: 'Cleared',
+      destination: 'Toronto',
       eta: '2025-05-16 12:00:00',
       storage_last_free_day: '2025-05-25'
     },
@@ -33,6 +35,7 @@ export async function seed(knex) {
       event_description: 'Hold for Docs',
       event_time: '2025-05-17 09:15:00',
       customs_status: 'Pending',
+      destination: 'Montreal',
       eta: '2025-05-22 14:00:00',
       storage_last_free_day: null
     },
@@ -43,6 +46,7 @@ export async function seed(knex) {
       event_description: 'Loaded on Truck',
       event_time: '2025-05-18 07:45:00',
       customs_status: 'Cleared',
+      destination: 'Vancouver',
       eta: '2025-05-19 10:00:00',
       storage_last_free_day: '2025-05-27'
     },
@@ -53,6 +57,7 @@ export async function seed(knex) {
       event_description: 'On Rail',
       event_time: '2025-05-19 16:20:00',
       customs_status: 'In Bond',
+      destination: 'Montreal',
       eta: '2025-05-23 18:00:00',
       storage_last_free_day: null
     },
@@ -63,6 +68,7 @@ export async function seed(knex) {
       event_description: 'On Rail',
       event_time: '2025-05-19 16:20:00',
       customs_status: 'In Bond',
+      destination: 'Toronto',
       eta: '2025-06-02 18:00:00',
       storage_last_free_day: null
     },
@@ -73,6 +79,7 @@ export async function seed(knex) {
       event_description: 'On Rail',
       event_time: '2025-05-19 16:20:00',
       customs_status: 'In Bond',
+      destination: 'Montreal',
       eta: '2025-06-03 18:00:00',
       storage_last_free_day: null
     }

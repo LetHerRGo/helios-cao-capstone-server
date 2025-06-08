@@ -7,19 +7,28 @@ import verifyRole from "../services/verifyRole.js";
 const knex = initKnex(configuration);
 const router = express.Router();
 
-router.get('/', verifyToken, verifyRole('forwarder'), async (req, res) => {
+router.get('/', verifyToken, verifyRole(['forwarder', 'agent', 'client']), async (req, res) => {
   try {
-    const username = req.user.username;
-    const operator = await knex("forwarder_operator").where({username}).first();
-    if (!operator) {
-      return res.status(404).json({ message: "Operator not found" });
+    const { role, username } = req.user;
+
+    let operator;
+    if (role === 'forwarder') {
+      operator = await knex("forwarder_operator").where({ username }).first();
+      if (!operator) return res.status(404).json({ message: "Operator not found" });
+
+    } else if (role === 'agent') {
+      operator = await knex("agent_user").where({ username }).first();
+      if (!operator) return res.status(404).json({ message: "Agent not found" });
+
+    } else if (role === 'client') {
+      operator = await knex("client_user").where({ username }).first();
+      if (!operator) return res.status(404).json({ message: "Client not found" });
     }
-    //join data from multiple tables
-    const data = await knex("container_movements")
+
+    let query = knex("container_movements")
       .join("containers", "container_movements.container_id", "containers.id")
       .leftJoin("agent", "containers.agent_id", "agent.id")
       .leftJoin("client", "containers.client_id", "client.id")
-      .where("containers.operator_id", operator.id)
       .select(
         "container_movements.*",
         "containers.container_number",
@@ -27,12 +36,24 @@ router.get('/', verifyToken, verifyRole('forwarder'), async (req, res) => {
         "agent.name as agent_name",
         "client.name as client_name"
       );
-      res.status(200).json(data);
+
+    if (role === 'forwarder') {
+      query.where("containers.operator_id", operator.id);
+    } else if (role === 'agent') {
+      query.where("containers.agent_id", operator.agent_id);
+    } else if (role === 'client') {
+      query.where("containers.client_id", operator.client_id);
+    }
+
+    const data = await query;
+    res.status(200).json(data);
+
   } catch (error) {
     console.error("Error retrieving container movement data:", error);
     res.status(500).json({ message: "Failed to retrieve data" });
   }
 });
+
 
 router.delete('/:id', verifyToken, verifyRole('forwarder'), async (req, res) => {
   const { id } = req.params;

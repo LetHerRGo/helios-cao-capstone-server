@@ -19,7 +19,7 @@ const authenticateUser = async (username, password) => {
         } else {
             user = await knex('forwarder_operator').where({username}).first();
             if (user) {
-                role = 'forwarder';
+                role = 'operator';
             }
         }
     }

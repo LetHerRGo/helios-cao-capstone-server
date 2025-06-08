@@ -9,7 +9,7 @@ import cnTracking from "../services/cnTracking.js"
 const knex = initKnex(configuration);
 const router = express.Router();
 
-router.post('/', verifyToken, verifyRole('forwarder'), async (req, res) => {
+router.post('/', verifyToken, verifyRole('operator'), async (req, res) => {
 if (req.user) {
     
     const agent_id = await knex("agent").select("id").where("name", req.body.agentName).first();
@@ -51,6 +51,7 @@ if (req.user) {
             event_description: equipment.Event?.Description || "N/A",
             event_time: equipment.Event?.Time.replace(/ [A-Z]{2,3}$/, "") || null,
             customs_status: equipment.CustomsHold?.Description || "N/A",
+            destination: equipment.Destination?.Station || "N/A",
             ETA: equipment.ETA?.Time.replace(/ [A-Z]{2,3}$/, "") || null,
             storage_last_free_day: equipment.StorageCharge?.LastFreeDay || null
         })
