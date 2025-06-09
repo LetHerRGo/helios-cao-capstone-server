@@ -7,12 +7,25 @@ import verifyRole from "../services/verifyRole.js";
 const knex = initKnex(configuration);
 const router = express.Router();
 
-router.get('/', verifyToken, verifyRole(['forwarder', 'agent', 'client']), async (req, res) => {
+router.get('/', verifyToken, verifyRole(['operator', 'agent', 'client']), async (req, res) => {
   try {
     const { role, username } = req.user;
-
+    const {sortBy, order} = req.query; //using sorting query
     let operator;
-    if (role === 'forwarder') {
+
+    //columns allowed to sort
+    const allowedColumns = [
+      "container_number",
+      "forwarder_ref",
+      "agent_name",
+      "client_name",
+      "destination",
+      "ETA",
+      "storage_last_free_day",
+      "status",
+    ]
+
+    if (role === 'operator') {
       operator = await knex("forwarder_operator").where({ username }).first();
       if (!operator) return res.status(404).json({ message: "Operator not found" });
 
@@ -24,6 +37,7 @@ router.get('/', verifyToken, verifyRole(['forwarder', 'agent', 'client']), async
       operator = await knex("client_user").where({ username }).first();
       if (!operator) return res.status(404).json({ message: "Client not found" });
     }
+
 
     let query = knex("container_movements")
       .join("containers", "container_movements.container_id", "containers.id")
@@ -37,12 +51,17 @@ router.get('/', verifyToken, verifyRole(['forwarder', 'agent', 'client']), async
         "client.name as client_name"
       );
 
-    if (role === 'forwarder') {
+    if (role === 'operator') {
       query.where("containers.operator_id", operator.id);
     } else if (role === 'agent') {
       query.where("containers.agent_id", operator.agent_id);
     } else if (role === 'client') {
       query.where("containers.client_id", operator.client_id);
+    }
+
+    //sort function
+    if (sortBy && allowedColumns.includes(sortBy)) {
+      query.orderBy(sortBy, order === "desc" ? "desc" : "asc");
     }
 
     const data = await query;
@@ -55,7 +74,7 @@ router.get('/', verifyToken, verifyRole(['forwarder', 'agent', 'client']), async
 });
 
 
-router.delete('/:id', verifyToken, verifyRole('forwarder'), async (req, res) => {
+router.delete('/:id', verifyToken, verifyRole('operator'), async (req, res) => {
   const { id } = req.params;
 
   try {

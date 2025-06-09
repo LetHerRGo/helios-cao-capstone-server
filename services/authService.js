@@ -36,7 +36,7 @@ const authenticateUser = async (username, password) => {
         id: user.id,
         username: user.username,
         role: role,
-    }, 'your_jwt_secret', {expiresIn: '1h'});
+    }, 'your_jwt_secret', {expiresIn: '12h'});
     return token;
 };
 

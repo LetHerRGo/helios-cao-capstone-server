@@ -21,6 +21,7 @@ router.post('/', verifyToken, verifyRole('operator'), async(req, res) => {
     try {
         
         const data = await cnTracking(extractedContainers);
+        
         const equipmentList = data.ThirdPartyIntermodalShipment.Equipment.map((equipment) => {
             return {
                 id: equipment.EquipmentId || "N/A",
@@ -34,6 +35,8 @@ router.post('/', verifyToken, verifyRole('operator'), async(req, res) => {
                 storageLastFreeDay: equipment.StorageCharge?.LastFreeDay || "N/A",
             }
         });
+
+        // console.log(JSON.stringify(response.data))
 
         res.json({
             equipmentList: equipmentList

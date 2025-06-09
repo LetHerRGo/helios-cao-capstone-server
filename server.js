@@ -9,6 +9,8 @@ import clientsRoutes from "./routes/clientsRoutes.js"
 import traceRoutes from "./routes/traceRoutes.js"
 import initKnex from "knex";
 import configuration from "./knexfile.js";
+import "./services/updateContainers.js" // update container every 1 mins
+import logRoutes from "./routes/logRoutes.js";
 
 const knex = initKnex(configuration);
 
@@ -35,6 +37,7 @@ app.use("/addshipment", addshipmentRoutes);
 app.use("/agents", agentsRoutes);
 app.use("/clients", clientsRoutes);
 app.use("/trace", traceRoutes);
+app.use("/logs", logRoutes);
 
 app.listen(PORT, function () {
   console.log(`Listening on port ${PORT}...`);
