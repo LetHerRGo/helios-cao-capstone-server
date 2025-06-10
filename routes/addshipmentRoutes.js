@@ -62,8 +62,6 @@ if (req.user) {
 
         res.json({message: `Container '${ctnrNum}' has been added and tracking info recorded.`})
     } catch(error) {
-        console.error("Insert error (backend):", error.message);
-        console.log("Insert error:", error);
         res.status(400).json({message: error.message});
     }}else {
         res.status(401).json({ message: "Unauthorized" });
