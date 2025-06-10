@@ -61,6 +61,8 @@ cron.schedule('* * * * *', async () => {
             storage_last_free_day: equipment?.StorageCharge?.LastFreeDay || null,
             updated_at: new Date()
         });
+        
+        //monitor 
         console.log(`📝 Logged ETA change for container_id ${container_number}`);
     }
 

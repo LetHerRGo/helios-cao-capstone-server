@@ -73,26 +73,19 @@ router.get('/', verifyToken, verifyRole(['operator', 'agent', 'client']), async 
   }
 });
 
-
+//delete container function
 router.delete('/:id', verifyToken, verifyRole('operator'), async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Step 1: Find the container_id from container_movements
+    
     const movement = await knex("container_movements").where({ id }).first();
-
     if (!movement) {
       return res.status(404).json({ message: "Container movement not found." });
     }
-
     const containerId = movement.container_id;
-
-    // Step 2: Delete the container_movements row
     await knex("container_movements").where({ id }).del();
-
-    // Step 3: Delete the corresponding container row
     await knex("containers").where({ id: containerId }).del();
-
     res.status(200).json({ message: "Container movement and its container deleted successfully." });
   } catch (error) {
     console.error("Error deleting records:", error);
