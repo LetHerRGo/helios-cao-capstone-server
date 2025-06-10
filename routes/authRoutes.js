@@ -14,7 +14,6 @@ router.post('/', async (req, res) => {
         const token = await authenticateUser(username, password);
         res.json({message: 'Login successful', token});
     } catch (error) {
-        console.log(error);
         res.status(400).json({message: error.message});
     }
 })

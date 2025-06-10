@@ -9,7 +9,6 @@ const router = express.Router();
 
 router.get('/:containerId', verifyToken, verifyRole('operator'), async (req, res) => {
     const {containerId} = req.params;
-    console.log(containerId);
 
     try {
         const logs= await knex("container_movement_logs")
@@ -22,7 +21,6 @@ router.get('/:containerId', verifyToken, verifyRole('operator'), async (req, res
 
         res.json(logs);
     } catch (error) {
-        console.error("Failed to retrieve logs:", error.message);
         res.status(500).json({message: "Faild to fetch logs."})
     }
 
