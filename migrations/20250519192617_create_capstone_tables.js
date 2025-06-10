@@ -61,9 +61,23 @@ export async function up(knex) {
       table.string("event_description", 255);
       table.dateTime("event_time");
       table.string("customs_status", 255);
+      table.string("destination", 255);
       table.dateTime("ETA");
       table.date("storage_last_free_day");
-    });
+    })
+    .createTable("container_movement_logs", (table) => {
+      table.increments("id").primary();
+      table.integer("container_id").unsigned().notNullable()
+      .references("id").inTable("containers").onDelete("CASCADE");
+      table.string("location", 255);
+      table.string("event_description", 255);
+      table.dateTime("event_time");
+      table.string("customs_status", 255);
+      table.string("destination", 255);
+      table.dateTime("ETA");
+      table.date("storage_last_free_day");
+      table.timestamp("updated_at").defaultTo(knex.fn.now());
+});
 }
 
 /**
@@ -72,6 +86,7 @@ export async function up(knex) {
  */
 export async function down(knex) {
   await knex.schema
+    .dropTableIfExists("container_movement_logs")
     .dropTableIfExists("container_movements")
     .dropTableIfExists("containers")
     .dropTableIfExists("client_user")
