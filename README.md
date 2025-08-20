@@ -1,6 +1,4 @@
-# Project Title
-
-FreightAIO-Server
+# FreightAIO-Server
 
 ## Overview
 
